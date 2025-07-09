@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entraînement aux Adverbes en 6ème</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #niveau {
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        #reponse {
+            width: 200px;
+            height: 30px;
+            font-size: 18px;
+            padding: 10px;
+        }
+        #verifier {
+            width: 100px;
+            height: 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #resultat {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Entraînement aux Adverbes en 6ème</h1>
+    <div id="niveau">
+        <label for="niveau-select">Sélectionnez un niveau de difficulté :</label>
+        <select id="niveau-select">
+            <option value="facile">Facile</option>
+            <option value="moyen">Moyen</option>
+            <option value="difficile">Difficile</option>
+        </select>
+    </div>
+    <div id="question"></div>
+    <input type="text" id="reponse" placeholder="Réponse">
+    <button id="verifier">Vérifier</button>
+    <div id="resultat"></div>
+
+    <script>
+        const niveauSelect = document.getElementById('niveau-select');
+        const questionDiv = document.getElementById('question');
+        const reponseInput = document.getElementById('reponse');
+        const verifierButton = document.getElementById('verifier');
+        const resultatDiv = document.getElementById('resultat');
+
+        let niveau = 'facile';
+        let questions = {
+            facile: [
+                { question: "Je ___________ (vite/lentement) fais mes devoirs.", reponse: "vite" },
+                { question: "Elle ___________ (bien/mal) chante.", reponse: "bien" },
+                { question: "Il ___________ (rapidement/lentement) mange son petit déjeuner.", reponse: "rapidement" }
+            ],
+            moyen: [
+                { question: "Je ___________ (toujours/jamais) vais au parc le dimanche.", reponse: "toujours" },
+                { question: "Elle ___________ (déjà/pas encore) a fini ses devoirs.", reponse: "déjà" },
+                { question: "Il ___________ (souvent/rarement) regarde la télévision.", reponse: "souvent" }
+            ],
+            difficile: [
+                { question: "Je ___________ (constamment/temporairement) travaille sur ce projet.", reponse: "constamment" },
+                { question: "Elle ___________ (généralement/exceptionnellement) arrive à l'heure.", reponse: "généralement" },
+                { question: "Il ___________ (fréquemment/infréquemment) voyage pour son travail.", reponse: "fréquemment" }
+            ]
+        };
+        let currentQuestion = 0;
+
+        niveauSelect.addEventListener('change', () => {
+            niveau = niveauSelect.value;
+            currentQuestion = 0;
+            afficherQuestion();
+        });
+
+        verifierButton.addEventListener('click', () => {
+            const reponse = reponseInput.value.trim().toLowerCase();
+            if (reponse === questions[niveau][currentQuestion].reponse) {
+                resultatDiv.textContent = 'Bravo ! La réponse est correcte.';
+            } else {
+                resultatDiv.textContent = `Dommage ! La réponse est incorrecte. La bonne réponse est "${questions[niveau][currentQuestion].reponse}".`;
+            }
+            currentQuestion = (currentQuestion + 1) % questions[niveau].length;
+            afficherQuestion();
+            reponseInput.value = '';
+        });
+
+        function afficherQuestion() {
+            questionDiv.textContent = questions[niveau][currentQuestion].question;
+        }
+
+        afficherQuestion();
+    </script>
+</body>
+</html>
